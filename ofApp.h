@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "RadiusEmitter.h"
+#include "BulletEmitter.h"
 #include "./Shapes/player.h"
 #include <ctime>;
 

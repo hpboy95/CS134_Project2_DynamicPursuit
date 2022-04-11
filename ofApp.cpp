@@ -127,6 +127,9 @@ void ofApp::update() {
 		if (keysPressed["right"]) {
 			player->angularForce += (float)thrust / 15;
 		}
+		if (keysPressed["space"]) {
+			player->shoot();
+		}
 
 		//Game over check
 		if (player->getHealth() - player->getDamage() == 0) {
@@ -226,6 +229,7 @@ void ofApp::draw(){
 		ofTranslate(ofGetWidth() / 2, ofGetHeight() - 0.05 * ofGetHeight());
 		text = to_string(player->getHealth() - player->getDamage()) + "/" +  to_string(player->getHealth());
 		fontWidth = font.stringWidth(text);
+		fontWidth = font.stringWidth(text);
 		font.drawString(text, -fontWidth / 2, 0);
 		ofPopMatrix();
 
@@ -243,6 +247,7 @@ void ofApp::draw(){
 		if (showHUD) {
 			gui.draw();
 		}
+		ofSetColor(ofColor::white);
 	}
 }
 
@@ -270,7 +275,6 @@ void ofApp::drawHeading() {
 	glm::vec3 rightEnd = end - 15 * rightRotatedHeading;
 	ofDrawLine(end, rightEnd);
 	ofPopMatrix();
-
 }
 
 //--------------------------------------------------------------
@@ -323,8 +327,11 @@ void ofApp::keyPressed(int key) {
 		break;
 	case ' ':
 	{
-		start = true;
-		time(&time_start);
+		if (!start) {
+			start = true;
+			time(&time_start);
+		}
+		keysPressed["space"] = true;
 		break;
 	}
 	case OF_KEY_UP:
@@ -380,6 +387,11 @@ void ofApp::keyReleased(int key) {
 	case OF_KEY_DOWN:
 	{
 		keysPressed["down"] = false;
+		break;
+	}
+	case ' ':
+	{
+		keysPressed["space"] = false;
 		break;
 	}
 	case OF_KEY_ALT:

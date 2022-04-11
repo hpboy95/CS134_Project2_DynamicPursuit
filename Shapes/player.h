@@ -5,12 +5,14 @@
 
 #pragma once
 #include "triangleShape.h"
+#include "../BulletEmitter.h"
 
 class Player : public TriangleShape {
 public:
     Player() {
 
     }
+
     Player(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, ofImage sprite) {
         verts.push_back(p1);
         verts.push_back(p2);
@@ -45,14 +47,7 @@ public:
         damageTaken += damage;
     }
 
-    void update(int health, glm::vec3 scale, bool sprite) {
-        this->maxHealth = health;
-        setScale(scale);
-        hasSprite = sprite;
-        integrate();
-        force = glm::vec3(0);
-        angularForce = 0;
-    }
+    void update(int health, glm::vec3 scale, bool sprite);
 
     ofImage mySprite;
 
@@ -73,6 +68,8 @@ public:
     bool bThrust = false;
     bool collision = false;
     float prevDist = 0;
+    BulletEmitter gun;
+    void shoot();
 
 
 private:

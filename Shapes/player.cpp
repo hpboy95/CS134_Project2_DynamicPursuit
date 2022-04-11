@@ -59,6 +59,8 @@ void Player::draw() {
         ofDrawTriangle(verts[0], verts[1], verts[2]);
         ofPopMatrix();
     }
+
+    gun.draw();
 }
 
 void Player::drawSprite() {
@@ -108,4 +110,18 @@ void Player::integrate() {
     angularVelocity += a * dt;
     angularVelocity *= damping;
 
+}
+
+void Player::update(int health, glm::vec3 scale, bool sprite) {
+    this->maxHealth = health;
+    setScale(scale);
+    hasSprite = sprite;
+    integrate();
+    force = glm::vec3(0);
+    angularForce = 0;
+    gun.update();
+}
+
+void Player::shoot(){
+    gun.spawnSprite(glm::vec3(getMatrix() * glm::vec4(verts[1] , 1)), getHeading());
 }
