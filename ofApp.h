@@ -67,11 +67,12 @@ class ofApp : public ofBaseApp{
 		ofxFloatSlider life;
 		ofxVec3Slider velocity;
 		ofxToggle showHeading;
-		ofxFloatSlider speedSlider;
 		ofxFloatSlider scaleSlider;
 		ofxIntSlider playerLife;
 		ofxToggle showSprite;
 		ofxLabel screenSize;
+		ofxFloatSlider restitution;
+		ofxFloatSlider thrust;
 		ofTrueTypeFont font;
 		bool showHUD;
 		time_t time_start, time_finish;

@@ -92,11 +92,13 @@ public:
 
     vector<glm::vec3> verts;
 
-private:
+    //Channels
     glm::vec3 pos;
+    float rotation = 0.0; // degrees
+
+private:
 
     //Channels
-    float rotation = 0.0; // degrees
     ofColor color = ofColor::black;
     glm::vec3 scale = glm::vec3(1, 1, 1);
     float defaultSize = 20.0;

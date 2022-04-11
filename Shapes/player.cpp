@@ -82,3 +82,30 @@ glm::vec3 Player::getCenter() {
     }
     return glm::vec3(x_sum / 3, y_sum / 3, 0);
 }
+
+// Integrator for simple trajectory physics
+//
+void Player::integrate() {
+
+    // init current framerate (or you can use ofGetLastFrameTime())
+    //
+    float framerate = ofGetFrameRate();
+    float dt = 1.0 / framerate;
+
+    // linear motion
+    //
+    pos += (velocity * dt);
+    glm::vec3 accel = acceleration;
+    accel += (force * 1.0 / mass);
+    velocity += accel * dt;
+    velocity *= damping;
+
+    // angular motion
+    //
+    rotation += (angularVelocity * dt);
+    float a = angularAcceleration;
+    a += (angularForce * 1.0 / mass);
+    angularVelocity += a * dt;
+    angularVelocity *= damping;
+
+}

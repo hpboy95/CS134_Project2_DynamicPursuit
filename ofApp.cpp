@@ -68,75 +68,81 @@ void ofApp::setup(){
 	gui.add(life.setup("life", 5, 0.0, 10));
 	gui.add(velocity.setup("velocity", ofVec3f(-200, -200, 0), ofVec3f(-200, -200, 0), ofVec3f(1000, 1000, 1000)));
 	//In pixels per second
-	gui.add(speedSlider.setup("Speed Slider", 5.0, 1.0, 20.0));
 	gui.add(scaleSlider.setup("Scale Slider", 1.0, 0.1, 5.0));
 	gui.add(playerLife.setup("Player Health", 20, 0, 100));
 	gui.add(showHeading.setup("Show Heading", false));
 	gui.add(showSprite.setup("Show Sprite", true));
+	gui.add(thrust.setup("Thrust", 800, 100, 1000));
+	gui.add(restitution.setup("Restitution", .85, 0.0, 1.0));
 	showHUD = false;
 	//Additional GUI
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-	if (spawners != numEmitters) {
-		while (spawners > numEmitters) {
-			RadiusEmitter* temp = new RadiusEmitter(player, 50);
-			temp->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
-			temp->drawable = false;
-			temp->setChildImage(enemySprite);
-			temp->start();
+	if (start) {
+		//Add new Spawners
+		if (spawners != numEmitters) {
+			while (spawners > numEmitters) {
+				RadiusEmitter* temp = new RadiusEmitter(player, 50);
+				temp->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
+				temp->drawable = false;
+				temp->setChildImage(enemySprite);
+				temp->start();
 
-			emitters.push_back(temp);
-			numEmitters++;
+				emitters.push_back(temp);
+				numEmitters++;
+			}
+
+			while (spawners < numEmitters) {
+				vector<Emitter*>::iterator s = emitters.begin();
+				vector<Emitter*>::iterator tmp;
+				tmp = emitters.erase(s);
+				s = tmp;
+				numEmitters--;
+			}
 		}
 
-		while (spawners < numEmitters) {
-			vector<Emitter*>::iterator s = emitters.begin();
-			vector<Emitter*>::iterator tmp;
-			tmp = emitters.erase(s);
-			s = tmp;
-			numEmitters--;
+		player->update(playerLife, glm::vec3(scaleSlider), showSprite);
+
+		//Update Emitters
+		for (int i = 0; i < emitters.size(); i++) {
+			emitters[i]->haveChildImage = showSprite;
+			emitters[i]->setRate(rate);
+			emitters[i]->setLifespan(life * 1000);    // convert to milliseconds 
+			emitters[i]->setVelocity(ofVec3f(velocity->x, velocity->y, velocity->z));
+			emitters[i]->update();
 		}
-	}
 
-	player->setHealth(playerLife);
-	player->setScale(glm::vec3(scaleSlider));
-	player->hasSprite = showSprite;
-	
-	for (int i = 0; i < emitters.size(); i++) {
-		emitters[i]->haveChildImage = showSprite;
-		emitters[i]->setRate(rate);
-		emitters[i]->setLifespan(life * 1000);    // convert to milliseconds 
-		emitters[i]->setVelocity(ofVec3f(velocity->x, velocity->y, velocity->z));
-		emitters[i]->update();
-	}
-	
 
-	if (keysPressed["up"]) {
-		player->setPos(player->getPos() + (baseSpeed * speedSlider / framerate) * player->getHeading());
-	}
-	if (keysPressed["down"]) {
-		player->setPos(player->getPos() - (baseSpeed * speedSlider / framerate) * player->getHeading());
-	}
-	if (keysPressed["left"]) {
-		player->setRotation(player->getRotation() - (baseRotation * speedSlider));
-	}
-	if (keysPressed["right"]) {
-		player->setRotation(player->getRotation() + (baseRotation * speedSlider));
-	}
-
-	if (player->getHealth() - player->getDamage() == 0) {
-		if (!gameOver) {
-			time(&time_finish);
+		if (keysPressed["up"]) {
+			player->force = player->force + (float)thrust * player->getHeading();
 		}
-		gameOver = true;
+		if (keysPressed["down"]) {
+			player->force = player->force - (float)thrust * player->getHeading();
+		}
+		if (keysPressed["left"]) {
+			player->angularForce -= (float)thrust / 15;
+		}
+		if (keysPressed["right"]) {
+			player->angularForce += (float)thrust / 15;
+		}
+
+		//Game over check
+		if (player->getHealth() - player->getDamage() == 0) {
+			if (!gameOver) {
+				time(&time_finish);
+			}
+			gameOver = true;
+		}
+
 	}
 }
 
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	//Always Draw the Background
 	background.draw(0, 0, ofGetWidth(), ofGetHeight());
 	//Game Over Screen
 	if (gameOver) {

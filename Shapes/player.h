@@ -45,7 +45,35 @@ public:
         damageTaken += damage;
     }
 
+    void update(int health, glm::vec3 scale, bool sprite) {
+        this->maxHealth = health;
+        setScale(scale);
+        hasSprite = sprite;
+        integrate();
+        force = glm::vec3(0);
+        angularForce = 0;
+    }
+
     ofImage mySprite;
+
+    //  Integrator Function;
+    //
+    void integrate();
+
+    // Physics data goes here  (for integrate() );
+    //
+    glm::vec3 velocity = glm::vec3(0, 0, 0);
+    glm::vec3 acceleration = glm::vec3(0, 0, 0);
+    glm::vec3 force = glm::vec3(0, 0, 0);
+    float mass = 1.0;
+    float damping = .99;
+    float angularForce = 0;
+    float angularVelocity = 0.0;
+    float angularAcceleration = 0.0;
+    bool bThrust = false;
+    bool collision = false;
+    float prevDist = 0;
+
 
 private:
     glm::vec3 heading = glm::vec3(0, -1, 0);
