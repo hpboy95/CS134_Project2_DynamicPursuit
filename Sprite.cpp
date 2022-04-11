@@ -7,14 +7,14 @@ bool Sprite::inside(const glm::vec3 p) {
 	// if there is no sprite image attached, then just use triangle case.
 	//
 	
-	return TriangleShape::inside(p);
+	//return TriangleShape::inside(p);
 	
 
 	// if sprite image attached, then first check if point is inside bounds of image
 	// in object space.  If point is inside bounds, then make sure the point is in
 	// opaque part of image.
 	//
-	/*
+	
 	glm::vec3 s = glm::inverse(getMatrix()) * glm::vec4(p, 1);
 	int w = spriteImage.getWidth();
 	int h = spriteImage.getHeight();
@@ -25,5 +25,5 @@ bool Sprite::inside(const glm::vec3 p) {
 		return (color.a != 0);   // check if color is opaque (not the transparent background)
 	}
 	else return false;
-	*/
+	
 }

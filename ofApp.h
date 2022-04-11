@@ -56,6 +56,7 @@ class ofApp : public ofBaseApp{
 		ofImage playerSprite;
 		ofImage enemySprite;
 		ofImage background;
+        ofImage asteroid;
 		ofVec3f mouse_last;
 		bool imageLoaded;
 		bool start = false;

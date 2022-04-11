@@ -19,7 +19,7 @@ void ofApp::setup(){
 		cout << "Can't open image file" << endl;
 		ofExit();
 	}
-	if (enemySprite.load("images/spaceship2.png")) {
+	if (enemySprite.load("images/asteroid-pixel-art-maker-514800.png")) {
 		imageLoaded = true;
 	}
 	else {
@@ -33,6 +33,13 @@ void ofApp::setup(){
 		cout << "Can't open image file" << endl;
 		ofExit();
 	}
+    if (asteroid.load("images/asteroid-pixel-art-maker-514800.png")){
+        imageLoaded = true;
+    }
+    else {
+        cout << "Can't open image file" << endl;
+        ofExit();
+    }
 
 	//Setup Player
 	player = new Player(glm::vec3(-50, 50, 0), glm::vec3(50, 50, 0), glm::vec3(0, -50, 0), playerSprite);

@@ -46,9 +46,6 @@ void RadiusEmitter::update() {
 			}
 			//Update Agent Position
 			if (!updated) {
-				glm::vec3 toTarget = glm::normalize(target->getPos() - s->getPos());
-				float newRotation = glm::orientedAngle(toTarget, s->getHeading(), glm::vec3(0, 0, 1));
-				s->setRotation(s->getRotation() + newRotation);
 				s++;
 			}
 		}
@@ -86,6 +83,8 @@ void RadiusEmitter::spawnSprite() {
 	}
 	*/
 	sprite.setPos(glm::vec3(random_x, random_y, getPos().z));
+    glm::vec3 toTarget = glm::normalize(sprite.getPos() - target->getPos());
+    sprite.heading = toTarget;
 	sprite.birthtime = ofGetElapsedTimeMillis();
 	sys->add(sprite);
 }
