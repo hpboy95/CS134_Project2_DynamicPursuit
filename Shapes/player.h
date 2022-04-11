@@ -16,9 +16,6 @@ public:
         verts.push_back(p2);
         verts.push_back(p3);
         mySprite = sprite;
-        damageTaken = 0;
-        maxHealth = 100;
-
     }
     void draw();
     void drawSprite();
@@ -30,7 +27,7 @@ public:
         this->heading = heading;
     }
 
-    bool hasSprite;
+    bool hasSprite = false;
 
     int getHealth() {
         return maxHealth;
@@ -52,7 +49,7 @@ public:
 
 private:
     glm::vec3 heading = glm::vec3(0, -1, 0);
-    int maxHealth;
-    int damageTaken;
+    int maxHealth = 100;
+    int damageTaken = 0;
 
 };
