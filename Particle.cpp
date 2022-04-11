@@ -6,7 +6,7 @@ Particle::Particle() {
 	// initialize particle with some reasonable values first;
 	//
 	velocity = 800;
-	position.set(0, 0, 0);
+	position = glm::vec3(0, 0, 0);
 	lifespan = 5;
 	birthtime = 0;
 	radius = 10;

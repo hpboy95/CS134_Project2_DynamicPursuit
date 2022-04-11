@@ -8,7 +8,7 @@ class Particle {
 public:
 	Particle();
 
-	ofVec3f position;
+	glm::vec3 position;
 	float velocity;
 	glm::vec3 heading;
 	float   lifespan;

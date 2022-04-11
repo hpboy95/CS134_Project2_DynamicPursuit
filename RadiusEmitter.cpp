@@ -34,7 +34,7 @@ void RadiusEmitter::update() {
 			s = tmp;
 		}
 		else {
-			//Check for collisions
+			//Check for collisions with player
 			bool updated = false;
 			float distance = glm::distance(s->getPos(), target->getPos());
 			float contactDistance = s->spriteImage.getWidth() / 2 + target->mySprite.getWidth() / 2;
@@ -44,6 +44,25 @@ void RadiusEmitter::update() {
 				updated = true;
 				target->dealDamage(1);
 			}
+            //Check for collisions with the bullets if you didnt collide with player
+            vector<Particle>::iterator bullets = target->gun.sys->bullets.begin();
+            vector<Particle>::iterator tmpBullet;
+            while (bullets != target->gun.sys->bullets.end()){
+                distance = glm::distance(bullets->position, s->getPos());
+                contactDistance = s->spriteImage.getWidth() / 2 + bullets->radius;
+                bool deleted = false;
+                if (distance < contactDistance) {
+                    tmpBullet = target->gun.sys->bullets.erase(bullets);
+                    bullets = tmpBullet;
+                    deleted = true;
+                    tmp = sys->sprites.erase(s);
+                    s = tmp;
+                    updated = true;
+                }
+                if (!deleted){
+                    bullets++;
+                }
+            }
 			//Update Agent Position
 			if (!updated) {
 				s++;
