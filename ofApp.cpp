@@ -65,6 +65,7 @@ void ofApp::setup(){
     explosions->setVelocity(glm::vec3(1000));
     explosions->setOneShot(true);
     explosions->setGroupSize(100);
+    explosions->lifespan = 2;
     explosions->sys->addForce(radial);
 
 	Emitter *temp = new RadiusEmitter(player, explosions, 50);

@@ -89,7 +89,7 @@ BulletEmitter::BulletEmitter() {
 
 
 void BulletEmitter::init() {
-	lifespan = 6000;    // default milliseconds
+	lifespan = 2000;    // default milliseconds
 	lastSpawned = 0;
 	radius = 0.2;
 }
@@ -145,9 +145,14 @@ void BulletEmitter::moveSprite(Particle* particle) {
 // virtual function to spawn sprite (can be overloaded)
 //
 void BulletEmitter::spawnSprite(glm::vec3 p, glm::vec3 heading) {
-	Particle particle;
-	particle.heading = heading;
-	particle.position = p;
-	particle.birthtime = ofGetElapsedTimeMillis();
-	sys->add(particle);
+    float currentTime = ofGetElapsedTimeMillis();
+    if (currentTime - lastSpawned > 1000){
+        Particle particle;
+        particle.heading = heading;
+        particle.position = p;
+        particle.birthtime = currentTime;
+        sys->add(particle);
+        lastSpawned = currentTime;
+    }
+    
 }
