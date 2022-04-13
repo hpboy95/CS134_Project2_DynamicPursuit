@@ -34,16 +34,16 @@ public:
 // Some convenient built-in forces
 //
 class GravityForce: public ParticleForce {
-	ofVec3f gravity;
+	glm::vec3 gravity;
 public:
-	GravityForce(const ofVec3f & gravity);
+	GravityForce(const glm::vec3 & gravity);
 	void updateForce(Particle *);
 };
 
 class TurbulenceForce : public ParticleForce {
-	ofVec3f tmin, tmax;
+	glm::vec3 tmin, tmax;
 public:
-	TurbulenceForce(const ofVec3f & min, const ofVec3f &max);
+	TurbulenceForce(const glm::vec3 & min, const glm::vec3 &max);
 	void updateForce(Particle *);
 };
 

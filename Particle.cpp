@@ -31,7 +31,7 @@ void Particle::integrate() {
 
     // update position based on velocity
     //
-    position += (velocity * dt);
+    position += (velocity * heading * dt);
 
     // add a little damping for good measure
     //

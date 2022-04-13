@@ -29,7 +29,7 @@ ParticleEmitter::~ParticleEmitter() {
 
 void ParticleEmitter::init() {
 	rate = 1;
-	velocity = ofVec3f(0, 20, 0);
+	velocity = 1000;
 	lifespan = 3;
 	started = false;
 	oneShot = false;
@@ -48,11 +48,10 @@ void ParticleEmitter::draw() {
 	if (visible) {
 		switch (type) {
 		case DirectionalEmitter:
-			ofDrawSphere(position, radius/10);  // just draw a small sphere for point emitters 
+			ofDrawSphere(pos, radius/10);  // just draw a small sphere for point emitters
 			break;
-		case SphereEmitter:
 		case RadialEmitter:
-			ofDrawSphere(position, radius/10);  // just draw a small sphere as a placeholder
+			ofDrawSphere(pos, radius/10);  // just draw a small sphere as a placeholder
 			break;
 		default:
 			break;
@@ -112,17 +111,16 @@ void ParticleEmitter::spawn(float time) {
 	switch (type) {
 	case RadialEmitter:
 	{
-		ofVec3f dir = ofVec3f(ofRandom(-1, 1), ofRandom(-1, 1), ofRandom(-1, 1));
-		float speed = velocity.length();
-		particle.velocity = dir.getNormalized() * speed;
-		particle.position.set(position);
+        particle.heading = glm::normalize(glm::vec3(ofRandom(-1, 1), ofRandom(-1, 1), ofRandom(-1, 1)));
+		particle.velocity = velocity;
+		particle.position = pos;
 	}
 	break;
 	case SphereEmitter:
 		break;
 	case DirectionalEmitter:
 		particle.velocity = velocity;
-		particle.position.set(position);
+		particle.position = pos;
 		break;
 	}
 
