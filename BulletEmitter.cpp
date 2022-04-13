@@ -146,7 +146,7 @@ void BulletEmitter::moveSprite(Particle* particle) {
 //
 void BulletEmitter::spawnSprite(glm::vec3 p, glm::vec3 heading) {
     float currentTime = ofGetElapsedTimeMillis();
-    if (currentTime - lastSpawned > 1000){
+    if (currentTime - lastSpawned > 300){
         Particle particle;
         particle.heading = heading;
         particle.position = p;
