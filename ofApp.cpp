@@ -141,10 +141,10 @@ void ofApp::update() {
 			player->force = player->force - (float)thrust * player->getHeading();
 		}
 		if (keysPressed["left"]) {
-			player->angularForce -= (float)thrust / 15;
+			player->angularForce -= (float)thrust / 5;
 		}
 		if (keysPressed["right"]) {
-			player->angularForce += (float)thrust / 15;
+			player->angularForce += (float)thrust / 5;
 		}
 		if (keysPressed["space"]) {
 			player->shoot();
