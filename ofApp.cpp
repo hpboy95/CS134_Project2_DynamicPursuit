@@ -243,7 +243,6 @@ void ofApp::draw(){
 
 
 		//Draw Player and other sprites
-		cout << player->hasSprite << endl;
 		for (int i = 0; i < emitters.size(); i++) {
 			emitters[i]->draw();
 		}
