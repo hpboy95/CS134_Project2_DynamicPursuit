@@ -10,12 +10,17 @@ public:
 
 	glm::vec3 position;
 	float velocity;
+    glm::vec3 acceleration;
+    glm::vec3 forces;
 	glm::vec3 heading;
-	float   lifespan;
-	float   radius;
-	float   birthtime;
-	void    draw();
-	float   age();        // sec
+    float   damping;
+    float   mass;
+    float   lifespan;
+    float   radius;
+    float   birthtime;
+    void    integrate();
+    void    draw();
+    float   age(); //sec
 	ofColor color;
 };
 
