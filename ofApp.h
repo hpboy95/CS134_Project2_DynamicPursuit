@@ -4,7 +4,6 @@
 #include "ofxGui.h"
 #include "RadiusEmitter.h"
 #include "BulletEmitter.h"
-#include "ParticleEmitter.h"
 #include "./Shapes/player.h"
 #include <ctime>;
 
@@ -53,9 +52,6 @@ class ofApp : public ofBaseApp{
 		vector<Emitter *> emitters;
 		int numEmitters;
 		RadiusEmitter  *turret = NULL;
-		ParticleEmitter *explosions;
-
-		//Create explosion force
 
 		ofImage playerSprite;
 		ofImage enemySprite;
