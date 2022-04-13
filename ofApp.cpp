@@ -67,6 +67,17 @@ void ofApp::setup(){
 	emitters.push_back(temp);
 	numEmitters ++;
 
+    //Prepare Explosion
+    ImpulseRadialForce *radial = new ImpulseRadialForce(1000);
+    explosions = new ParticleEmitter();
+    explosions->particleRadius = 5;
+    explosions->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
+    explosions->setEmitterType(RadialEmitter);
+    explosions->setVelocity(glm::vec3(1000));
+    explosions->setOneShot(true);
+    explosions->setGroupSize(100);
+    explosions->sys->addForce(radial);
+    
 	//GUI
 	//HUD
 	gui.setup();
@@ -120,7 +131,8 @@ void ofApp::update() {
 			emitters[i]->setVelocity(ofVec3f(velocity->x, velocity->y, velocity->z));
 			emitters[i]->update();
 		}
-
+        
+        explosions->update();
 
 		if (keysPressed["up"]) {
 			player->force = player->force + (float)thrust * player->getHeading();
@@ -246,6 +258,7 @@ void ofApp::draw(){
 		for (int i = 0; i < emitters.size(); i++) {
 			emitters[i]->draw();
 		}
+        explosions->draw();
 		player->draw();
 		if (showHeading) {
 			drawHeading();
@@ -316,6 +329,9 @@ void ofApp::keyPressed(int key) {
 	switch (key) {
 	case 'C':
 	case 'c':
+        explosions->sys->reset();
+        cout << "exploding" <<endl;
+        explosions->start();
 		break;
 	case 'F':
 	case 'f':

@@ -9,7 +9,7 @@ public:
 	Particle();
 
 	glm::vec3 position;
-	float velocity;
+	glm::vec3 velocity;
     glm::vec3 acceleration;
     glm::vec3 forces;
 	glm::vec3 heading;

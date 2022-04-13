@@ -85,7 +85,7 @@ void ParticleSystem::draw() {
 
 // Gravity Force Field 
 //
-GravityForce::GravityForce(const glm::vec3 &g) {
+GravityForce::GravityForce(const ofVec3f &g) {
 	gravity = g;
 }
 
@@ -98,7 +98,7 @@ void GravityForce::updateForce(Particle * particle) {
 
 // Turbulence Force Field 
 //
-TurbulenceForce::TurbulenceForce(const glm::vec3 &min, const glm::vec3 &max) {
+TurbulenceForce::TurbulenceForce(const ofVec3f &min, const ofVec3f &max) {
 	tmin = min;
 	tmax = max;
 }
@@ -166,9 +166,9 @@ void CyclicForce::updateForce(Particle* particle) {
 	// we basically create a random direction for each particle
 	// the force is only added once after it is triggered.
 	//
-	glm::vec3 dir = glm::vec3(0, 1, 0);
-    dir = glm::cross(dir, particle->forces);
-	particle->forces += glm::normalize(dir * magnitude);
+	ofVec3f dir = ofVec3f(0, 1, 0);
+	dir = dir.crossed(particle->forces);
+	particle->forces += dir.getNormalized() * magnitude;
 }
 
 void CyclicForce::setRotation(float rotation) {

@@ -29,7 +29,7 @@ ParticleEmitter::~ParticleEmitter() {
 
 void ParticleEmitter::init() {
 	rate = 1;
-	velocity = 1000;
+	velocity = glm::vec3(1000);
 	lifespan = 3;
 	started = false;
 	oneShot = false;

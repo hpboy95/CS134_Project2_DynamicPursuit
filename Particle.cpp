@@ -5,10 +5,10 @@ Particle::Particle() {
 
 	// initialize particle with some reasonable values first;
 	//
-	velocity = 800;
-    acceleration = glm::vec3(0, 0, 0);
+	velocity = glm::vec3(0);
+    acceleration = glm::vec3(0);
 	position = glm::vec3(0, 0, 0);
-    forces = glm::vec3(0, 0, 0);
+    forces = glm::vec3(0);
 	lifespan = 5;
 	birthtime = 0;
 	radius = 10;
@@ -33,6 +33,13 @@ void Particle::integrate() {
     //
     position += (velocity * heading * dt);
 
+    // update acceleration with accumulated paritcles forces
+    // remember :  (f = ma) OR (a = 1/m * f)
+    //
+    glm::vec3 accel = acceleration;    // start with any acceleration already on the particle
+    accel += (forces * (1.0 / mass));
+    velocity += accel * dt;
+    
     // add a little damping for good measure
     //
     velocity *= damping;
