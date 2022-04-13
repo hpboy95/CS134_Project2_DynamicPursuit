@@ -82,8 +82,6 @@ void BulletList::draw() {
 	}
 }
 
-
-
 BulletEmitter::BulletEmitter() {
 	sys = new BulletList();
 	init();
@@ -141,7 +139,7 @@ void BulletEmitter::update() {
 // virtual function to move sprite (can be overloaded)
 //
 void BulletEmitter::moveSprite(Particle* particle) {
-	particle->position = particle->position + particle->velocity * particle->heading / ofGetFrameRate();
+	particle->position = particle->position + 1000 * particle->heading / ofGetFrameRate();
 }
 
 // virtual function to spawn sprite (can be overloaded)
