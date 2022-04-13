@@ -126,6 +126,7 @@ void ParticleEmitter::spawn(float time) {
 
 	// other particle attributes
 	//
+    particle.color = ofColor(ofColor::lightGray);
 	particle.lifespan = lifespan;
 	particle.birthtime = time;
 	particle.radius = particleRadius;

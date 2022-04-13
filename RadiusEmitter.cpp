@@ -43,6 +43,8 @@ void RadiusEmitter::update() {
 				s = tmp;
 				updated = true;
 				target->dealDamage(1);
+                explosions->pos = s->getPos();
+                explosions->start();
 			}
             //Check for collisions with the bullets if you didnt collide with player
             vector<Particle>::iterator bullets = target->gun.sys->bullets.begin();
@@ -58,6 +60,8 @@ void RadiusEmitter::update() {
                     tmp = sys->sprites.erase(s);
                     s = tmp;
                     updated = true;
+                    explosions->pos = s->getPos();
+                    explosions->start();
                 }
                 if (!deleted){
                     bullets++;

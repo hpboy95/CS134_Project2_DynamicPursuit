@@ -56,8 +56,18 @@ void ofApp::setup(){
 	//
 	
 	//	turret = new Emitter();
+    
+    //Prepare Explosion
+    ImpulseRadialForce *radial = new ImpulseRadialForce(1000);
+    explosions = new ParticleEmitter();
+    explosions->particleRadius = 5;
+    explosions->setEmitterType(RadialEmitter);
+    explosions->setVelocity(glm::vec3(1000));
+    explosions->setOneShot(true);
+    explosions->setGroupSize(100);
+    explosions->sys->addForce(radial);
 
-	Emitter *temp = new RadiusEmitter(player, 50);
+	Emitter *temp = new RadiusEmitter(player, explosions, 50);
 
 	temp->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
 	temp->drawable = false;
@@ -66,17 +76,6 @@ void ofApp::setup(){
 
 	emitters.push_back(temp);
 	numEmitters ++;
-
-    //Prepare Explosion
-    ImpulseRadialForce *radial = new ImpulseRadialForce(1000);
-    explosions = new ParticleEmitter();
-    explosions->particleRadius = 5;
-    explosions->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
-    explosions->setEmitterType(RadialEmitter);
-    explosions->setVelocity(glm::vec3(1000));
-    explosions->setOneShot(true);
-    explosions->setGroupSize(100);
-    explosions->sys->addForce(radial);
     
 	//GUI
 	//HUD
@@ -102,7 +101,7 @@ void ofApp::update() {
 		//Add new Spawners
 		if (spawners != numEmitters) {
 			while (spawners > numEmitters) {
-				RadiusEmitter* temp = new RadiusEmitter(player, 50);
+				RadiusEmitter* temp = new RadiusEmitter(player, explosions, 50);
 				temp->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
 				temp->drawable = false;
 				temp->setChildImage(enemySprite);
