@@ -68,6 +68,7 @@ public:
     bool bThrust = false;
     bool collision = false;
     float prevDist = 0;
+    float lastShot = 0;
     BulletEmitter gun;
     void shoot();
 

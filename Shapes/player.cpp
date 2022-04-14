@@ -123,5 +123,9 @@ void Player::update(int health, glm::vec3 scale, bool sprite) {
 }
 
 void Player::shoot(){
-    gun.spawnSprite(glm::vec3(getMatrix() * glm::vec4(verts[1] , 1)), getHeading());
+    float currentTime = ofGetElapsedTimeMillis();
+    if (currentTime - lastShot > 300) {
+        gun.spawnSprite(glm::vec3(getMatrix() * glm::vec4(verts[1], 1)), getHeading());
+        lastShot = ofGetElapsedTimeMillis();
+    }
 }

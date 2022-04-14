@@ -57,12 +57,21 @@ class ofApp : public ofBaseApp{
         //Prep Explosions
         ParticleEmitter *explosions;
 
+		//Set Images
 		ofImage playerSprite;
 		ofImage enemySprite;
 		ofImage background;
-        ofImage asteroid;
-		ofVec3f mouse_last;
+		ofImage asteroid;
 		bool imageLoaded;
+
+		//Set Sounds
+		ofSoundPlayer backgroundSound;
+		ofSoundPlayer shoot1Sound;
+		ofSoundPlayer shoot2Sound;
+		ofSoundPlayer explodeSound;
+		bool soundLoaded;
+
+		ofVec3f mouse_last;
 		bool start = false;
 		bool gameOver = false;
 

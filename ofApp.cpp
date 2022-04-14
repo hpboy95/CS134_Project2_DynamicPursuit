@@ -41,6 +41,40 @@ void ofApp::setup(){
         ofExit();
     }
 
+	//LoadSounds
+	if (backgroundSound.load("sounds/Hardmoon_-_Deep_space.mp3")) {
+		imageLoaded = true;
+	}
+	else {
+		cout << "Can't open sound file" << endl;
+		ofExit();
+	}
+	if (shoot1Sound.load("sounds/laserfire01.ogg")) {
+		imageLoaded = true;
+	}
+	else {
+		cout << "Can't open sound file" << endl;
+		ofExit();
+	}
+	if (shoot2Sound.load("sounds/laserfire02.ogg")) {
+		imageLoaded = true;
+	}
+	else {
+		cout << "Can't open sound file" << endl;
+		ofExit();
+	}
+	if (explodeSound.load("sounds/explosion.wav")) {
+		imageLoaded = true;
+	}
+	else {
+		cout << "Can't open sound file" << endl;
+		ofExit();
+	}
+
+	backgroundSound.setLoop(true);
+	backgroundSound.play();
+
+
 	//Setup Player
 	player = new Player(glm::vec3(-50, 50, 0), glm::vec3(50, 50, 0), glm::vec3(0, -50, 0), playerSprite);
 	player->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
