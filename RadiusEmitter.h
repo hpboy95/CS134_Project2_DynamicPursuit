@@ -19,11 +19,11 @@ public:
     ParticleEmitter *explosions;
     ofSoundPlayer *explodeSound;
 
+    SpriteList toSpawn = SpriteList();
     void moveSprite(Sprite* sprite);
     void spawnSprite();
     void update();
-    void split(int stage, glm::vec3 heading, glm::vec3 position);
-
+    void split(int stage, glm::vec3 heading, glm::vec3 position, glm::vec3 scale);
 
 };
 

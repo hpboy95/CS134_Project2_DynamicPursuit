@@ -15,7 +15,14 @@ void RadiusEmitter::update() {
 		lastSpawned = time;
 	}
 
-
+	//Add the split sprites
+	vector<Sprite>::iterator spawning = toSpawn.sprites.begin();
+	vector<Sprite>::iterator spawns;
+	while (spawning != toSpawn.sprites.end()) {
+		sys->add(*spawning);
+		spawns = toSpawn.sprites.erase(spawning);
+		spawning = spawns;
+	}
 
 	// update sprite list
 	//
@@ -36,15 +43,19 @@ void RadiusEmitter::update() {
 		else {
 			//Check for collisions with player
 			bool updated = false;
+			bool splitting = false;
 			glm::vec3 asteroidPosition = s->getPos();
 			float asteroidWidth = s->spriteImage.getWidth();
+			glm::vec3 heading = s->heading;
+			glm::vec3 scale = s->getScale();
+			int stage = s->stage;
 			float distance = glm::distance(asteroidPosition, target->getPos());
 			float contactDistance = asteroidWidth / 2 + target->mySprite.getWidth() / 2;
 			if (distance < contactDistance) {
 				tmp = sys->sprites.erase(s);
 				s = tmp;
 				updated = true;
-				target->dealDamage(1);
+				target->dealDamage(stage);
                 explosions->pos = asteroidPosition;
                 explosions->start();
 				explodeSound->play();
@@ -66,6 +77,9 @@ void RadiusEmitter::update() {
                     s = tmp;
                     updated = true;
 					explodeSound->play();
+					if (stage != 0) {
+						splitting = true;
+					}
                 }
                 if (!deleted){
                     bullets++;
@@ -74,6 +88,9 @@ void RadiusEmitter::update() {
 			//Update Agent Position
 			if (!updated) {
 				s++;
+			}
+			if (splitting) {
+				split(stage, heading, asteroidPosition, scale);
 			}
 		}
 			
@@ -114,4 +131,33 @@ void RadiusEmitter::spawnSprite() {
     sprite.heading = toTarget;
 	sprite.birthtime = ofGetElapsedTimeMillis();
 	sys->add(sprite);
+}
+
+void RadiusEmitter::split(int stage, glm::vec3 heading, glm::vec3 position, glm::vec3 scale) {
+	Sprite sprite1; 
+	Sprite sprite2;
+	//Sprite1 stuff
+	sprite1.stage = stage - 1;
+	if (haveChildImage) sprite1.setImage(childImage);
+	sprite1.velocity = velocity;
+	sprite1.lifespan = lifespan;
+	sprite1.setPos(position);
+	sprite1.setScale(0.5 * scale);
+	sprite1.heading = -heading;
+	sprite1.rotation += 45;
+	sprite1.birthtime = ofGetElapsedTimeMillis();
+
+	//Sprite2 stuff
+	sprite2.stage = stage - 1;
+	if (haveChildImage) sprite2.setImage(childImage);
+	sprite2.velocity = velocity;
+	sprite2.lifespan = lifespan;
+	sprite2.setPos(position);
+	sprite2.setScale(0.5 * scale);
+	sprite2.heading = -heading;
+	sprite2.rotation -= 45;
+	sprite2.birthtime = ofGetElapsedTimeMillis();
+
+	toSpawn.add(sprite1);
+	toSpawn.add(sprite2);
 }

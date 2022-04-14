@@ -188,7 +188,7 @@ void ofApp::update() {
 		}
 
 		//Game over check
-		if (player->getHealth() - player->getDamage() == 0) {
+		if (player->getHealth() - player->getDamage() <= 0) {
 			if (!gameOver) {
 				time(&time_finish);
 			}
