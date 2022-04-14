@@ -65,8 +65,10 @@ class ofApp : public ofBaseApp{
 
 		//Set Sounds
 		ofSoundPlayer backgroundSound;
+		ofSoundPlayer *thrustSound;
 		ofSoundPlayer *explodeSound;
 		bool soundLoaded;
+		bool playThrust = true;
 
 		ofVec3f mouse_last;
 		bool start = false;

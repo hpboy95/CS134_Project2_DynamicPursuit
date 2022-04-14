@@ -44,8 +44,16 @@ void ofApp::setup(){
 	ofSoundPlayer& shoot1Sound = ofSoundPlayer();
 	ofSoundPlayer& shoot2Sound = ofSoundPlayer();
 	explodeSound = new ofSoundPlayer();
+	thrustSound = new ofSoundPlayer();
 	//LoadSounds
 	if (backgroundSound.load("sounds/Hardmoon_-_Deep_space.mp3")) {
+		imageLoaded = true;
+	}
+	else {
+		cout << "Can't open sound file" << endl;
+		ofExit();
+	}
+	if (thrustSound->load("sounds/ScatterNoise1.mp3")) {
 		imageLoaded = true;
 	}
 	else {
@@ -73,6 +81,7 @@ void ofApp::setup(){
 		cout << "Can't open sound file" << endl;
 		ofExit();
 	}
+	thrustSound->setLoop(true);
 	explodeSound->setVolume(0.50);
 	backgroundSound.setLoop(true);
 	backgroundSound.play();
@@ -185,6 +194,20 @@ void ofApp::update() {
 		}
 		if (keysPressed["space"]) {
 			player->shoot();
+		}
+
+		if (keysPressed["up"] || keysPressed["down"] || keysPressed["left"] || keysPressed["right"]) {
+			playThrust = true;
+		}
+		else {
+			playThrust = false;
+		}
+
+		if (!playThrust) {
+			thrustSound->play();
+		}
+		else {
+			//thrustSound->stop();
 		}
 
 		//Game over check

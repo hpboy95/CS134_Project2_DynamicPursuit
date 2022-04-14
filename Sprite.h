@@ -64,5 +64,10 @@ public:
 	glm::vec3 heading = glm::vec3(0, 1, 0);
 
 	ofImage spriteImage;
+
+	//Physics
+	glm::vec3 acceleration = glm::vec3(0);
+	glm::vec3 forces = glm::vec3(0);
+	float mass = 0;
 };
 
