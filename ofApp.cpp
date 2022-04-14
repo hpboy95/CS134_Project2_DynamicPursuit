@@ -205,9 +205,13 @@ void ofApp::draw(){
 	background.draw(0, 0, ofGetWidth(), ofGetHeight());
 	//Game Over Screen
 	if (gameOver) {
+		for (int i = 0; i < emitters.size(); i++) {
+			emitters[i]->stop();
+		}
+
 		ofSetColor(ofColor::orange);
 		ofPushMatrix();
-		ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2 - 60);
+		ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2 - 80);
 		int difference = difftime(time_finish, time_start);
 		int minutes = difference / 60;
 		int seconds = difference % 60;
@@ -229,7 +233,13 @@ void ofApp::draw(){
 		font.drawString(buffer, -fontWidth / 2, 0);
 		ofPopMatrix();
 		ofPushMatrix();
-		ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2 + 60);
+		ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2 + 80);
+		text = "Score: " + to_string(player->score);
+		fontWidth = font.stringWidth(text);
+		font.drawString(text, -fontWidth / 2, 0);
+		ofPopMatrix();
+		ofPushMatrix();
+		ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2 + 160);
 		text = "Restart to Continue";
 		fontWidth = font.stringWidth(text);
 		font.drawString(text, -fontWidth / 2, 0);
@@ -266,25 +276,37 @@ void ofApp::draw(){
 		float fontWidth = font.stringWidth(buffer);
 		font.drawString(buffer, -fontWidth / 2, 0);
 		ofPopMatrix();
+		ofPushMatrix();
+		ofTranslate(ofGetWidth() / 2, ofGetHeight() - 0.92 * ofGetHeight() + 80);
+		string text = "Score:  " + to_string(player->score);
+		fontWidth = font.stringWidth(text);
+		font.drawString(text, -fontWidth / 2, 0);
+		ofPopMatrix();
 
 		//Draw FPS
 		int fps = ofGetFrameRate();
 		ofSetColor(ofColor::white);
 		ofPushMatrix();
 		ofTranslate(ofGetWidth() - 0.15 * ofGetWidth(), ofGetHeight() - 0.92 * ofGetHeight());
-		string text = "FPS " + to_string(fps);
+		text = "FPS " + to_string(fps);
 		fontWidth = font.stringWidth(text);
 		font.drawString(text, -fontWidth / 2, 0);
 		ofPopMatrix();
 
 		//HealthBar
+		ofSetColor(ofColor::red);
+		ofPushMatrix();
+		ofTranslate(ofGetWidth() / 2, ofGetHeight() - 0.05 * ofGetHeight() - 60);
+		text = "Health";
+		fontWidth = font.stringWidth(text);
+		font.drawString(text, -fontWidth / 2, 0);
+		ofPopMatrix();
 		double redFrac = player->getHealth() - player->getDamage()/ player->getHealth();
 		double blue = 1 - redFrac;
 		ofSetColor(ofColor::red);
 		ofPushMatrix();
 		ofTranslate(ofGetWidth() / 2, ofGetHeight() - 0.05 * ofGetHeight());
 		text = to_string(player->getHealth() - player->getDamage()) + "/" +  to_string(player->getHealth());
-		fontWidth = font.stringWidth(text);
 		fontWidth = font.stringWidth(text);
 		font.drawString(text, -fontWidth / 2, 0);
 		ofPopMatrix();

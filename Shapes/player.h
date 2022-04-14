@@ -79,6 +79,7 @@ public:
     ofSoundPlayer shoot1;
     ofSoundPlayer shoot2;
     BulletEmitter gun;
+    int score = 0;
     void shoot();
 
 

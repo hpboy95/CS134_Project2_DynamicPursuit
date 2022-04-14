@@ -52,7 +52,6 @@ class ofApp : public ofBaseApp{
 
 		vector<Emitter *> emitters;
 		int numEmitters;
-		RadiusEmitter  *turret = NULL;
     
         //Prep Explosions
         ParticleEmitter *explosions;

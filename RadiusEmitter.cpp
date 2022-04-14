@@ -59,6 +59,7 @@ void RadiusEmitter::update() {
                 explosions->pos = asteroidPosition;
                 explosions->start();
 				explodeSound->play();
+				target->score += 1;
 			}
             //Check for collisions with the bullets if you didnt collide with player
             vector<Particle>::iterator bullets = target->gun.sys->bullets.begin();
@@ -73,11 +74,12 @@ void RadiusEmitter::update() {
                     deleted = true;
 					explosions->pos = asteroidPosition; //Explode then delete
 					explosions->start();
+					target->score += 1;
                     tmp = sys->sprites.erase(s);
                     s = tmp;
                     updated = true;
 					explodeSound->play();
-					if (stage != 0) {
+					if (stage != 1) {
 						splitting = true;
 					}
                 }
@@ -113,6 +115,7 @@ void RadiusEmitter::spawnSprite() {
 	if (haveChildImage) sprite.setImage(childImage);
 	sprite.velocity = velocity;
 	sprite.lifespan = lifespan;
+	sprite.stage = 3;
 	//Set random position around target
 	int random_x = rand() % ofGetWidth();
 	int random_y = rand() % ofGetHeight();
