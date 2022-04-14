@@ -145,14 +145,9 @@ void BulletEmitter::moveSprite(Particle* particle) {
 // virtual function to spawn sprite (can be overloaded)
 //
 void BulletEmitter::spawnSprite(glm::vec3 p, glm::vec3 heading) {
-    float currentTime = ofGetElapsedTimeMillis();
-    if (currentTime - lastSpawned > 300){
-        Particle particle;
-        particle.heading = heading;
-        particle.position = p;
-        particle.birthtime = currentTime;
-        sys->add(particle);
-        lastSpawned = currentTime;
-    }
-    
+	Particle particle;
+    particle.heading = heading;
+    particle.position = p;
+    particle.birthtime = ofGetElapsedTimeMillis();
+	sys->add(particle);
 }

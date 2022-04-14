@@ -36,32 +36,34 @@ void RadiusEmitter::update() {
 		else {
 			//Check for collisions with player
 			bool updated = false;
-			float distance = glm::distance(s->getPos(), target->getPos());
-			float contactDistance = s->spriteImage.getWidth() / 2 + target->mySprite.getWidth() / 2;
+			glm::vec3 asteroidPosition = s->getPos();
+			float asteroidWidth = s->spriteImage.getWidth();
+			float distance = glm::distance(asteroidPosition, target->getPos());
+			float contactDistance = asteroidWidth / 2 + target->mySprite.getWidth() / 2;
 			if (distance < contactDistance) {
 				tmp = sys->sprites.erase(s);
 				s = tmp;
 				updated = true;
 				target->dealDamage(1);
-                explosions->pos = s->getPos();
+                explosions->pos = asteroidPosition;
                 explosions->start();
 			}
             //Check for collisions with the bullets if you didnt collide with player
             vector<Particle>::iterator bullets = target->gun.sys->bullets.begin();
             vector<Particle>::iterator tmpBullet;
-            while (bullets != target->gun.sys->bullets.end()){
-                distance = glm::distance(bullets->position, s->getPos());
-                contactDistance = s->spriteImage.getWidth() / 2 + bullets->radius;
+            while (!updated && bullets != target->gun.sys->bullets.end()){
+                distance = glm::distance(bullets->position, asteroidPosition);
+                contactDistance = asteroidWidth / 2 + bullets->radius;
                 bool deleted = false;
                 if (distance < contactDistance) {
                     tmpBullet = target->gun.sys->bullets.erase(bullets);
                     bullets = tmpBullet;
                     deleted = true;
+					explosions->pos = asteroidPosition; //Explode then delete
+					explosions->start();
                     tmp = sys->sprites.erase(s);
                     s = tmp;
                     updated = true;
-                    explosions->pos = s->getPos();
-                    explosions->start();
                 }
                 if (!deleted){
                     bullets++;
