@@ -66,9 +66,7 @@ class ofApp : public ofBaseApp{
 
 		//Set Sounds
 		ofSoundPlayer backgroundSound;
-		ofSoundPlayer shoot1Sound;
-		ofSoundPlayer shoot2Sound;
-		ofSoundPlayer explodeSound;
+		ofSoundPlayer *explodeSound;
 		bool soundLoaded;
 
 		ofVec3f mouse_last;

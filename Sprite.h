@@ -60,6 +60,7 @@ public:
 	string name =  "UnammedSprite";
 	float width = 40;
 	float height = 40;
+	int stage = 2;
 	glm::vec3 heading = glm::vec3(0, 1, 0);
 
 	ofImage spriteImage;

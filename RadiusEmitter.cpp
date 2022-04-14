@@ -47,6 +47,7 @@ void RadiusEmitter::update() {
 				target->dealDamage(1);
                 explosions->pos = asteroidPosition;
                 explosions->start();
+				explodeSound->play();
 			}
             //Check for collisions with the bullets if you didnt collide with player
             vector<Particle>::iterator bullets = target->gun.sys->bullets.begin();
@@ -64,6 +65,7 @@ void RadiusEmitter::update() {
                     tmp = sys->sprites.erase(s);
                     s = tmp;
                     updated = true;
+					explodeSound->play();
                 }
                 if (!deleted){
                     bullets++;

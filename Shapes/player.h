@@ -13,11 +13,13 @@ public:
 
     }
 
-    Player(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, ofImage sprite) {
+    Player(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, ofImage sprite, ofSoundPlayer& s1, ofSoundPlayer& s2) {
         verts.push_back(p1);
         verts.push_back(p2);
         verts.push_back(p3);
         mySprite = sprite;
+        shoot1 = s1;
+        shoot2 = s2;
     }
     void draw();
     void drawSprite();
@@ -49,6 +51,11 @@ public:
 
     void update(int health, glm::vec3 scale, bool sprite);
 
+    void addSounds(ofSoundPlayer &s1, ofSoundPlayer &s2) {
+        shoot1 = s1;
+        shoot2 = s2;
+    }
+
     ofImage mySprite;
 
     //  Integrator Function;
@@ -69,6 +76,8 @@ public:
     bool collision = false;
     float prevDist = 0;
     float lastShot = 0;
+    ofSoundPlayer shoot1;
+    ofSoundPlayer shoot2;
     BulletEmitter gun;
     void shoot();
 

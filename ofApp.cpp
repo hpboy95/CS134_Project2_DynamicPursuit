@@ -41,6 +41,9 @@ void ofApp::setup(){
         ofExit();
     }
 
+	ofSoundPlayer& shoot1Sound = ofSoundPlayer();
+	ofSoundPlayer& shoot2Sound = ofSoundPlayer();
+	explodeSound = new ofSoundPlayer();
 	//LoadSounds
 	if (backgroundSound.load("sounds/Hardmoon_-_Deep_space.mp3")) {
 		imageLoaded = true;
@@ -63,20 +66,20 @@ void ofApp::setup(){
 		cout << "Can't open sound file" << endl;
 		ofExit();
 	}
-	if (explodeSound.load("sounds/explosion.wav")) {
+	if (explodeSound->load("sounds/explosion.wav")) {
 		imageLoaded = true;
 	}
 	else {
 		cout << "Can't open sound file" << endl;
 		ofExit();
 	}
-
+	explodeSound->setVolume(0.50);
 	backgroundSound.setLoop(true);
 	backgroundSound.play();
 
 
 	//Setup Player
-	player = new Player(glm::vec3(-50, 50, 0), glm::vec3(50, 50, 0), glm::vec3(0, -50, 0), playerSprite);
+	player = new Player(glm::vec3(-50, 50, 0), glm::vec3(50, 50, 0), glm::vec3(0, -50, 0), playerSprite, shoot1Sound, shoot2Sound);
 	player->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
 	player->setRotation(0);
 	player->setScale(glm::vec3(1, 1, 1));
@@ -102,7 +105,7 @@ void ofApp::setup(){
     explosions->lifespan = 2;
     explosions->sys->addForce(radial);
 
-	Emitter *temp = new RadiusEmitter(player, explosions, 50);
+	Emitter *temp = new RadiusEmitter(player, explosions, 50, explodeSound);
 
 	temp->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
 	temp->drawable = false;
@@ -136,7 +139,7 @@ void ofApp::update() {
 		//Add new Spawners
 		if (spawners != numEmitters) {
 			while (spawners > numEmitters) {
-				RadiusEmitter* temp = new RadiusEmitter(player, explosions, 50);
+				RadiusEmitter* temp = new RadiusEmitter(player, explosions, 50, explodeSound);
 				temp->setPos(glm::vec3(ofGetWindowWidth() / 2.0, ofGetWindowHeight() / 2.0, 0));
 				temp->drawable = false;
 				temp->setChildImage(enemySprite);

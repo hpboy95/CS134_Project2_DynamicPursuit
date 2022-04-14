@@ -127,5 +127,12 @@ void Player::shoot(){
     if (currentTime - lastShot > 300) {
         gun.spawnSprite(glm::vec3(getMatrix() * glm::vec4(verts[1], 1)), getHeading());
         lastShot = ofGetElapsedTimeMillis();
+        int random = ofRandom(0, 2);
+        if (random == 0) {
+            shoot1.play();
+        }
+        else {
+            shoot2.play();
+        }
     }
 }
