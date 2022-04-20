@@ -41,8 +41,8 @@ void ofApp::setup(){
         ofExit();
     }
 
-	ofSoundPlayer& shoot1Sound = ofSoundPlayer();
-	ofSoundPlayer& shoot2Sound = ofSoundPlayer();
+	ofSoundPlayer shoot1Sound = ofSoundPlayer();
+	ofSoundPlayer shoot2Sound = ofSoundPlayer();
 	explodeSound = new ofSoundPlayer();
 	thrustSound = new ofSoundPlayer();
 	//LoadSounds
@@ -129,7 +129,7 @@ void ofApp::setup(){
 	gui.setup();
 	gui.add(spawners.setup("Number Of Spawners", 1, 1, 10));
 	gui.add(rate.setup("rate", 0.5, 0.5, 10));
-	gui.add(life.setup("life", 5, 0.0, 10));
+	gui.add(life.setup("life", 20, 0.0, 20));
 	gui.add(velocity.setup("velocity", ofVec3f(-200, -200, 0), ofVec3f(-200, -200, 0), ofVec3f(1000, 1000, 1000)));
 	//In pixels per second
 	gui.add(scaleSlider.setup("Scale Slider", 1.0, 0.1, 5.0));
